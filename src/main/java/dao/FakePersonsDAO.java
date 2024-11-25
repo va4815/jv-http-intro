@@ -2,12 +2,14 @@ package dao;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record FakePersonsDAO(
-        int id,
-        String firstname,
-        String lastname,
-        String email
+        String status,
+        int code,
+        ArrayList<People> result
 ) {
 
 }
