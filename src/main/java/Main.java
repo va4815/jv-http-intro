@@ -8,8 +8,9 @@ import reactor.core.publisher.Mono;
 
 public class Main {
 
-    private static String BASE_URL = "https://fakerapi.it";
+//    private static String BASE_URL = "https://fakerapi.it";
 
+    private static String BASE_URL = "https://api.schiphol.nl/public-flights";
     public static void main(String[] args) {
         System.out.println("Hello project");
 
@@ -22,10 +23,16 @@ public class Main {
                 webClient // Reassign the result to a String
                 .get()
                 .uri(uriBuilder -> uriBuilder
-                        .path("/api/v1/persons/")
-                        .queryParam("_gender", "M")
+                        .path("/flights")
+//                        .queryParam("includedelays", "false")
+//                        .queryParam("page", 0)
+//                        .queryParam("sort", "%2BscheduleTime")
                         .build()
                 )
+                        .header("Accept", "application/json")
+                        .header("app_id", "6089f8cc")
+                        .header("app_key", "e17f374f4d115b8fad35605927821d72")
+                        .header("ResourceVersion", "v4")
                 .accept(MediaType.APPLICATION_JSON)
 
                 .retrieve()
@@ -52,7 +59,7 @@ public class Main {
 
         responseBody = webClient // Reassign the result to a String
                 .get()
-                .uri("/api/v1/persons")
+                .uri("/flights")
                 .retrieve()
                 .bodyToMono(String.class) // Bind the returned JSON body to a String
                 .block();
