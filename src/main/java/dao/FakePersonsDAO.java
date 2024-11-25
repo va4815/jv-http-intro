@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public record FakePersonsDAO(
         String status,
         int code,
-        ArrayList<People> result
+        ArrayList<People> data
 ) {
 
 }

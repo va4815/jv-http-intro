@@ -1,3 +1,6 @@
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import dao.FakePersonsDAO;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -18,7 +21,11 @@ public class Main {
 //          responseBody
                 webClient // Reassign the result to a String
                 .get()
-                .uri("/api/v1/persons")
+                .uri(uriBuilder -> uriBuilder
+                        .path("/api/v1/persons/")
+                        .queryParam("_gender", "M")
+                        .build()
+                )
                 .accept(MediaType.APPLICATION_JSON)
 
                 .retrieve()
@@ -58,14 +65,14 @@ public class Main {
 
 //        flux.subscribe(System.out::println);
 
-//        ObjectMapper mapper = new ObjectMapper();
-//
-//        try {
-//            var result = mapper.readValue(responseBody, FakeBooksDAO.class);
-//            System.out.println(result);
-//        } catch (JsonProcessingException e) {
-//            System.err.println(e);
-//        }
+        ObjectMapper mapper = new ObjectMapper();
+
+        try {
+            var result = mapper.readValue(responseBody, FakePersonsDAO.class);
+            System.out.println(result);
+        } catch (JsonProcessingException e) {
+            System.err.println(e);
+        }
 
 
 //        System.out.println(responseBody);
